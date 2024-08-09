@@ -12,7 +12,7 @@ export class GamesService {
 
   getGames() {
     return this.gameRepository.query(
-      `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, ta.name AS away_team, g.home_score, g.away_score, g.conference_game, g.neutral_site
+      `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, th.mascot AS home_mascot, ta.name AS away_team, ta.mascot AS away_mascot, g.home_score, g.away_score, g.conference_game, g.neutral_site
       FROM games g
       JOIN teams th ON g.home_id = th.id
       JOIN teams ta ON g.away_id = ta.id`,
@@ -27,7 +27,7 @@ export class GamesService {
       `SELECT * FROM teams WHERE name='${team}'`,
     );
     const gamesObj = await this.gameRepository.query(
-      `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, ta.name AS away_team, g.home_score, g.away_score, g.conference_game, g.neutral_site
+      `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, th.mascot AS home_mascot, ta.name AS away_team, ta.mascot AS away_mascot, g.home_score, g.away_score, g.conference_game, g.neutral_site
       FROM games g
       JOIN teams th ON g.home_id = th.id
       JOIN teams ta ON g.away_id = ta.id

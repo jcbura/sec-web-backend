@@ -9,7 +9,7 @@ export class Team {
   @Column({ type: 'varchar', length: 255, nullable: false })
   name: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, default: null })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   mascot: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
