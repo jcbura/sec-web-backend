@@ -19,7 +19,7 @@ enum TeamEnum {
   VANDERBILT = 'vanderbilt',
 }
 
-export class GetTeamParams {
+export class TeamParams {
   @IsEnum(TeamEnum)
   team: TeamEnum;
 }

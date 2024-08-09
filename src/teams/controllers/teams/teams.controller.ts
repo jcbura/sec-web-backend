@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { TeamsService } from 'src/teams/services/teams/teams.service';
-import { GetTeamParams } from 'src/utils/GetTeamParams';
+import { TeamParams } from 'src/utils/TeamParams';
 
 @Controller('teams')
 export class TeamsController {
@@ -11,8 +11,13 @@ export class TeamsController {
     return this.teamService.getTeams();
   }
 
+  @Get('search')
+  searchTeams(@Query('name') name: string) {
+    return this.teamService.searchTeams(name);
+  }
+
   @Get(':team')
-  getTeam(@Param() params: GetTeamParams) {
+  getTeam(@Param() params: TeamParams) {
     return this.teamService.getTeam(params);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'src/typeorm/entities/Game';
-import { GetTeamParams } from 'src/utils/GetTeamParams';
+import { TeamParams } from 'src/utils/TeamParams';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -19,22 +19,24 @@ export class GamesService {
     );
   }
 
-  async getNextGame(params: GetTeamParams) {
+  async getNextGame(params: TeamParams) {
     const team = params.team.replace(/_/g, ' ');
     const today = new Date().toISOString().split('T')[0];
 
     const teamObj = await this.gameRepository.query(
-      `SELECT * FROM teams WHERE name='${team}'`,
+      `SELECT * FROM teams WHERE name=?`,
+      [team],
     );
     const gamesObj = await this.gameRepository.query(
       `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, th.mascot AS home_mascot, ta.name AS away_team, ta.mascot AS away_mascot, g.home_score, g.away_score, g.conference_game, g.neutral_site
       FROM games g
       JOIN teams th ON g.home_id = th.id
       JOIN teams ta ON g.away_id = ta.id
-      WHERE th.name='${team}' OR ta.name='${team}'
-      AND g.game_date >= '${today}'
+      WHERE th.name=? OR ta.name=?
+      AND g.game_date >= ?
       ORDER BY game_date
       LIMIT 1`,
+      [team, team, today],
     );
 
     return { ...teamObj[0], next_game: { ...(gamesObj[0] || null) } };
