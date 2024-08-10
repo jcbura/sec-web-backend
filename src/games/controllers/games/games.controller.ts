@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { GamesService } from 'src/games/services/games/games.service';
-import { TeamParams } from 'src/utils/TeamParams';
+import { TeamParams } from 'src/utils/definitions';
 
 @Controller('games')
 export class GamesController {

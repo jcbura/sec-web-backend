@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from 'src/typeorm/entities/Team';
-import { TeamParams } from 'src/utils/TeamParams';
+import { TeamParams, TeamQuery } from 'src/utils/definitions';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -10,7 +10,35 @@ export class TeamsService {
     @InjectRepository(Team) private readonly teamRepository: Repository<Team>,
   ) {}
 
-  getTeams() {
+  getTeams(query?: TeamQuery) {
+    if (query.sort === 'alpha') {
+      return this.teamRepository.query(
+        `SELECT *
+        FROM teams
+        WHERE sec_team=TRUE
+        ORDER BY name`,
+      );
+    } else if (query.sort === 'rank') {
+      return this.teamRepository.query(`SELECT *
+    FROM teams
+    WHERE sec_team=TRUE
+    ORDER BY 
+      CASE 
+        WHEN team_rank IS NOT NULL THEN team_rank 
+        ELSE 9999 -- Assign a high value to null ranks to push them lower in the sort order
+      END ASC,
+      name ASC`);
+    } else if (query.sort === 'record') {
+      return this.teamRepository.query(
+        `SELECT *
+        FROM teams
+        WHERE sec_team=TRUE
+        ORDER BY 
+          total_wins DESC, 
+          total_losses ASC, 
+          name ASC`,
+      );
+    }
     return this.teamRepository.query(`SELECT * FROM teams WHERE sec_team=TRUE`);
   }
 

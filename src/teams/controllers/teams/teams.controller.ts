@@ -1,14 +1,14 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { TeamsService } from 'src/teams/services/teams/teams.service';
-import { TeamParams } from 'src/utils/TeamParams';
+import { TeamParams, TeamQuery } from 'src/utils/definitions';
 
 @Controller('teams')
 export class TeamsController {
   constructor(private readonly teamService: TeamsService) {}
 
   @Get()
-  getTeams() {
-    return this.teamService.getTeams();
+  getTeams(@Query() query?: TeamQuery) {
+    return this.teamService.getTeams(query);
   }
 
   @Get('search')
