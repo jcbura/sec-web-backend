@@ -11,6 +11,11 @@ export class GamesController {
     return this.gameService.getGames();
   }
 
+  @Get('/sec')
+  getSECCGame() {
+    return this.gameService.getSECCGame();
+  }
+
   @Get(':team')
   getNextGame(@Param() params: TeamParams) {
     return this.gameService.getNextGame(params);
