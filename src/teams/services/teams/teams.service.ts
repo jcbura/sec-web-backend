@@ -15,12 +15,16 @@ export class TeamsService {
   }
 
   searchTeams(name: string) {
-    const team = name.replace(/_/g, ' ');
+    if (name) {
+      const team = name.replace(/_/g, ' ');
 
-    return this.teamRepository.query(
-      `SELECT id, name, mascot FROM teams WHERE name LIKE ? AND sec_team=TRUE ORDER BY name`,
-      [`%${team}%`],
-    );
+      return this.teamRepository.query(
+        `SELECT id, name, mascot FROM teams WHERE name LIKE ? AND sec_team=TRUE ORDER BY name`,
+        [`%${team}%`],
+      );
+    }
+
+    return [];
   }
 
   async getTeam(params: TeamParams) {
