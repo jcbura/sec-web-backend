@@ -22,9 +22,9 @@ export class TeamsService {
       return this.teamRepository.query(`SELECT *
     FROM teams
     WHERE sec_team=TRUE
-    ORDER BY 
-      CASE 
-        WHEN team_rank IS NOT NULL THEN team_rank 
+    ORDER BY
+      CASE
+        WHEN team_rank IS NOT NULL THEN team_rank
         ELSE 9999 -- Assign a high value to null ranks to push them lower in the sort order
       END ASC,
       name ASC`);
@@ -33,9 +33,9 @@ export class TeamsService {
         `SELECT *
         FROM teams
         WHERE sec_team=TRUE
-        ORDER BY 
-          total_wins DESC, 
-          total_losses ASC, 
+        ORDER BY
+          total_wins DESC,
+          total_losses ASC,
           name ASC`,
       );
     }

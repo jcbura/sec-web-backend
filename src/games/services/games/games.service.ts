@@ -42,13 +42,15 @@ export class GamesService {
     return { ...teamObj[0], next_game: { ...(gamesObj[0] || null) } };
   }
 
-  getSECCGame() {
-    return this.gameRepository.query(
+  async getSECCGame() {
+    const game = await this.gameRepository.query(
       `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, th.mascot AS home_mascot, th.team_rank AS home_rank, ta.name AS away_team, ta.mascot AS away_mascot, ta.team_rank AS away_rank, g.home_score, g.away_score, g.conference_game, g.neutral_site
       FROM games g
       JOIN teams th ON g.home_id = th.id
       JOIN teams ta ON g.away_id = ta.id
       WHERE game_date='2024-12-07'`,
     );
+
+    return game[0];
   }
 }
