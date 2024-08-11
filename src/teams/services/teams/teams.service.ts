@@ -50,7 +50,7 @@ export class TeamsService {
 
       return this.teamRepository.query(
         `SELECT id, name, mascot FROM teams WHERE name LIKE ? AND sec_team=TRUE ORDER BY name`,
-        [`%${team}%`],
+        [`${team}%`],
       );
     }
 
