@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Game } from 'src/typeorm/entities/Game';
-import { TeamParams } from 'src/utils/definitions';
+import { TeamParams } from 'src/dtos/TeamParams.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
