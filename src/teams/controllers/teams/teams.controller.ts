@@ -1,7 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { TeamsService } from 'src/teams/services/teams/teams.service';
-import { TeamParams } from 'src/dtos/TeamParams.dto';
-import { TeamQuery } from 'src/dtos/TeamQuery.dto';
+import { TeamParams, TeamQuery } from 'src/utils/definitions';
 
 @Controller('teams')
 export class TeamsController {

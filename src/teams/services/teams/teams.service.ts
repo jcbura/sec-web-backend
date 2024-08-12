@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from 'src/typeorm/entities/Team';
-import { TeamParams } from 'src/dtos/TeamParams.dto';
-import { TeamQuery } from 'src/dtos/TeamQuery.dto';
+import { TeamParams, TeamQuery } from 'src/utils/definitions';
 import { Repository } from 'typeorm';
 
 @Injectable()

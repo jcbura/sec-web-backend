@@ -1,4 +1,4 @@
-import { IsEnum } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 
 enum TeamEnum {
   ALABAMA = 'alabama',
@@ -22,4 +22,16 @@ enum TeamEnum {
 export class TeamParams {
   @IsEnum(TeamEnum)
   team: TeamEnum;
+}
+
+enum TeamQueryEnum {
+  ALPHABETICAL = 'alpha',
+  RANK = 'rank',
+  RECORD = 'record',
+}
+
+export class TeamQuery {
+  @IsEnum(TeamQueryEnum)
+  @IsOptional()
+  sort: TeamQueryEnum;
 }
