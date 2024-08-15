@@ -40,4 +40,7 @@ export class Game {
 
   @Column({ type: 'tinyint', nullable: false, default: 0 })
   neutral_site: boolean;
+
+  @Column({ type: 'tinyint', nullable: false, default: 0 })
+  game_played: boolean;
 }
