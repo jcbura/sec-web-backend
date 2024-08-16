@@ -13,14 +13,14 @@ export class TeamsService {
   getTeams(query?: TeamQuery) {
     if (query.sort === 'alpha') {
       return this.teamRepository.query(
-        `SELECT name, mascot, stadium
+        `SELECT id, name, mascot, stadium
         FROM teams
         WHERE sec_team=TRUE
         ORDER BY name`,
       );
     } else if (query.sort === 'rank') {
       return this.teamRepository.query(
-        `SELECT name, mascot, stadium
+        `SELECT id, name, mascot, stadium
         FROM teams
         WHERE sec_team=TRUE
         ORDER BY
@@ -32,7 +32,7 @@ export class TeamsService {
       );
     } else if (query.sort === 'record') {
       return this.teamRepository.query(
-        `SELECT name, mascot, stadium
+        `SELECT id, name, mascot, stadium
         FROM teams
         WHERE sec_team=TRUE
         ORDER BY
