@@ -41,6 +41,7 @@ export class TeamsService {
         name ASC`,
       );
     }
+
     return this.teamRepository.query(`SELECT * FROM teams WHERE sec_team=TRUE`);
   }
 
