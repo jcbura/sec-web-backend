@@ -49,7 +49,7 @@ export class TeamsService {
       const team = name.replace(/_/g, ' ');
 
       return this.teamRepository.query(
-        `SELECT id, name, mascot FROM teams WHERE name LIKE ? AND sec_team=TRUE ORDER BY name`,
+        `SELECT id, name, mascot, stadium FROM teams WHERE name LIKE ? AND sec_team=TRUE ORDER BY name`,
         [`${team}%`],
       );
     }
