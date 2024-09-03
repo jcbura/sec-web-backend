@@ -40,7 +40,26 @@ export class GamesService {
       [team, team, today],
     );
 
-    return { ...teamObj[0], next_game: { ...(gamesObj[0] || null) } };
+    let nextGame = gamesObj[0] || null;
+
+    if (!nextGame) {
+      const recentGamesObj = await this.gameRepository.query(
+        `SELECT g.id AS id, DATE_FORMAT(g.game_date, '%Y-%m-%d') AS game_date, g.game_time, g.stadium, th.name AS home_team, th.mascot AS home_mascot, th.team_rank AS home_rank, ta.name AS away_team, ta.mascot AS away_mascot, ta.team_rank AS away_rank, g.home_score, g.away_score, g.conference_game, g.neutral_site, g.game_played
+        FROM games g
+        JOIN teams th ON g.home_id = th.id
+        JOIN teams ta ON g.away_id = ta.id
+        WHERE (th.name=? OR ta.name=?)
+        AND g.game_played=TRUE
+        AND g.game_date < ?
+        ORDER BY game_date DESC
+        LIMIT 1`,
+        [team, team, today],
+      );
+
+      nextGame = recentGamesObj[0] || null;
+    }
+
+    return { ...teamObj[0], next_game: nextGame };
   }
 
   async getSECCGame() {
