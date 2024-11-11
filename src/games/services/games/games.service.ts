@@ -19,6 +19,28 @@ export class GamesService {
     );
   }
 
+  async getOOCRecord() {
+    const results = await this.gameRepository.query(`
+      SELECT 
+        SUM(CASE WHEN
+          ((home_id BETWEEN 1 AND 16 AND away_id NOT BETWEEN 1 AND 16) AND home_score > away_score) OR 
+          ((away_id BETWEEN 1 AND 16 AND home_id NOT BETWEEN 1 AND 16) AND away_score > home_score)
+          THEN 1 ELSE 0 END) AS ooc_wins,
+        SUM(CASE WHEN
+          ((home_id BETWEEN 1 AND 16 AND away_id NOT BETWEEN 1 AND 16) AND home_score < away_score) OR 
+          ((away_id BETWEEN 1 AND 16 AND home_id NOT BETWEEN 1 AND 16) AND away_score < home_score)
+          THEN 1 ELSE 0 END) AS ooc_losses
+      FROM games
+      WHERE (home_id BETWEEN 1 AND 16 OR away_id BETWEEN 1 AND 16)
+        AND game_played=TRUE
+        AND conference_game=FALSE`);
+
+    return {
+      ooc_wins: results[0]?.ooc_wins ?? 0,
+      ooc_losses: results[0]?.ooc_losses ?? 0,
+    };
+  }
+
   async getNextGame(params: TeamParams) {
     const team = params.team.replace(/_/g, ' ');
     const today = new Date().toISOString().split('T')[0];

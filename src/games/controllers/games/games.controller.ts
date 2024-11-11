@@ -11,6 +11,11 @@ export class GamesController {
     return this.gameService.getGames();
   }
 
+  @Get('/ooc')
+  getOOCRecord() {
+    return this.gameService.getOOCRecord();
+  }
+
   @Get('/sec')
   getSECCGame() {
     return this.gameService.getSECCGame();
